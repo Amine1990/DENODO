@@ -1,0 +1,8 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF ff_product
+    FOLDER = '/ds'
+    ROUTE LOCAL 'LocalConnection' '${databases.pers_remote.folder.ds.datasources.df.ff_product.ROUTE.LOCAL.PATH}'
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+

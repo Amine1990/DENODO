@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "SALES"
+    FOLDER = '/bv'
+    DATASOURCENAME="12c"
+    SCHEMANAME='${databases.pers_remote.folder.bv.views.jdbc.sales.SCHEMANAME}' 
+    RELATIONNAME='SALES' 
+    OUTPUTSCHEMA (
+        "PRODUCT_ID" = 'PRODUCT_ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  SORTABLE,
+        "DATE_SALE" = 'DATE_SALE' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE,
+        "AMOUNT" = 'AMOUNT' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='50', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "SALES" I18N us_mst_mdt (
+        "PRODUCT_ID":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
+        "DATE_SALE":timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypesize = '7'),
+        "AMOUNT":text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '50')
+    )
+    FOLDER = '/bv'
+    CACHE FULL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "SALES"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "PRODUCT_ID" (any) OPT ANY
+             ADD "DATE_SALE" (any) OPT ANY
+             ADD "AMOUNT" (any) OPT ANY
+        )
+        OUTPUTLIST ("AMOUNT", "DATE_SALE", "PRODUCT_ID"
+        )
+        WRAPPER (jdbc "SALES")
+    );
+

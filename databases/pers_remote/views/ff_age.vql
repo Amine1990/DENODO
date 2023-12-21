@@ -1,0 +1,24 @@
+﻿CREATE OR REPLACE WRAPPER DF ff_age
+    DATASOURCENAME=ff_age
+    OUTPUTSCHEMA (
+        id = 'Column0' (OPT),
+        age = 'Column1' (OPT)
+    );
+
+CREATE OR REPLACE TABLE ff_age I18N us_mst_mdt (
+        id:int,
+        age:text
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ff_age(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD age (any) OPT ANY
+        )
+        OUTPUTLIST (age, id
+        )
+        WRAPPER (df ff_age)
+    );
+

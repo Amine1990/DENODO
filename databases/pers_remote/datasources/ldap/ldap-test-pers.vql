@@ -1,0 +1,9 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE LDAP "ldap-test-pers"
+    URI='${databases.pers_remote.datasources.ldap.ldap-test-pers.URI}'
+    USERNAME='${databases.pers_remote.datasources.ldap.ldap-test-pers.USERNAME}'
+    USERPASSWORD='${databases.pers_remote.datasources.ldap.ldap-test-pers.USERPASSWORD}' ${databases.pers_remote.datasources.ldap.ldap-test-pers.USERPASSWORD.ENCRYPTED}
+    USEPAGING=FALSE
+    MAXPAGESIZE=1000
+    POOL_ENABLED = TRUE;
+

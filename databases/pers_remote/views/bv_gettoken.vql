@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW bv_gettoken AS SELECT 1234 AS atoken FROM dual();
+

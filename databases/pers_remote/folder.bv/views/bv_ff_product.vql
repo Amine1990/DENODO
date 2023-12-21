@@ -1,0 +1,26 @@
+﻿CREATE OR REPLACE WRAPPER DF ff_product
+    FOLDER = '/bv'
+    DATASOURCENAME=ff_product
+    OUTPUTSCHEMA (
+        id = 'id' (OPT),
+        name = 'name' (OPT)
+    );
+
+CREATE OR REPLACE TABLE bv_ff_product I18N us_mst_mdt (
+        id:int,
+        name:text
+    )
+    FOLDER = '/bv'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ff_product(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD id (any) OPT ANY
+             ADD name (any) OPT ANY
+        )
+        OUTPUTLIST (id, name
+        )
+        WRAPPER (df ff_product)
+    );
+

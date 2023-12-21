@@ -1,0 +1,65 @@
+﻿CREATE OR REPLACE WRAPPER DF "CSE-RTB-12008"
+    FOLDER = '/ds'
+    DATASOURCENAME="CSE-RTB-12008"
+    OUTPUTSCHEMA (
+        permat = 'permat',
+        dosnum = 'dosnum',
+        dosnum2 = 'dosnum2',
+        dostyp = 'dostyp',
+        dosnat = 'dosnat',
+        dossyn = 'dossyn',
+        dosdeb = 'dosdeb',
+        dosfin = 'dosfin',
+        id = 'id',
+        liddeb = 'liddeb',
+        lidfin = 'lidfin',
+        lidvac = 'lidvac',
+        lidvan = 'lidvan',
+        lidvaf = 'lidvaf',
+        olccod = 'olccod'
+    );
+
+CREATE OR REPLACE TABLE "CSE-RTB-12008" I18N us_mst_mdt (
+        permat:text,
+        dosnum:text,
+        dosnum2:text,
+        dostyp:text,
+        dosnat:text,
+        dossyn:text,
+        dosdeb:text,
+        dosfin:text,
+        id:text,
+        liddeb:text,
+        lidfin:text,
+        lidvac:text,
+        lidvan:text,
+        lidvaf:text,
+        olccod:text
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "CSE-RTB-12008"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD permat NOS ZERO ()
+             ADD dosnum NOS ZERO ()
+             ADD dosnum2 NOS ZERO ()
+             ADD dostyp NOS ZERO ()
+             ADD dosnat NOS ZERO ()
+             ADD dossyn NOS ZERO ()
+             ADD dosdeb NOS ZERO ()
+             ADD dosfin NOS ZERO ()
+             ADD id NOS ZERO ()
+             ADD liddeb NOS ZERO ()
+             ADD lidfin NOS ZERO ()
+             ADD lidvac NOS ZERO ()
+             ADD lidvan NOS ZERO ()
+             ADD lidvaf NOS ZERO ()
+             ADD olccod NOS ZERO ()
+        )
+        OUTPUTLIST (dosdeb, dosfin, dosnat, dosnum, dosnum2, dossyn, dostyp, id, liddeb, lidfin, lidvac, lidvaf, lidvan, olccod, permat
+        )
+        WRAPPER (df "CSE-RTB-12008")
+    );
+

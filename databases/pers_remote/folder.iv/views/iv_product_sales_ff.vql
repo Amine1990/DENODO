@@ -1,0 +1,2 @@
+﻿CREATE OR REPLACE VIEW iv_product_sales_ff FOLDER = '/iv' AS SELECT "SALES"."DATE_SALE" AS "DATE_SALE", "SALES"."AMOUNT" AS "AMOUNT", bv_ff_product.id AS id, bv_ff_product.name AS name FROM "SALES" AS "SALES" INNER JOIN bv_ff_product AS bv_ff_product ON "SALES"."PRODUCT_ID" = bv_ff_product.id  CONTEXT (DATAMOVEMENTPLAN = bv_ff_product : JDBC "12c");
+

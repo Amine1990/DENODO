@@ -1,0 +1,8 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF "CSE-RTB-12008"
+    FOLDER = '/ds'
+    ROUTE LOCAL 'LocalConnection' '${databases.pers_remote.folder.ds.datasources.df.cse-rtb-12008.ROUTE.LOCAL.PATH}' FILENAMEPATTERN = ''
+    COLUMNDELIMITER = ';'
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+

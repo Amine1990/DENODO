@@ -1,0 +1,18 @@
+﻿CREATE OR REPLACE VQL PROCEDURE "procedureWithExecutionCommand"
+    FOLDER = '/sp'
+(param_database IN VARCHAR, viewname OUT VARCHAR)
+AS (
+    temp_view_name VARCHAR;
+    CURSOR results IS 'SELECT view_name FROM VIEW_DEPENDENCIES()where view_database_name='':p_db''';
+)
+BEGIN
+    OPEN results PARAMETERS ( p_db ) VALUES ( param_database );
+    LOOP 
+        FETCH results INTO temp_view_name;
+        RETURN ROW ( viewname) VALUES (temp_view_name);
+        EXIT WHEN results%NOTFOUND;
+    END LOOP;
+    CLOSE results;
+
+END;
+

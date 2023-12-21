@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "AGE"
+    FOLDER = '/bv'
+    DATASOURCENAME="12c"
+    SCHEMANAME='${databases.pers_remote.folder.bv.views.jdbc.age.SCHEMANAME}' 
+    RELATIONNAME='AGE' 
+    OUTPUTSCHEMA (
+        "ID" = 'ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  SORTABLE,
+        "AGE" = 'AGE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "AGE" I18N us_mst_mdt (
+        "ID":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
+        "AGE":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38')
+    )
+    FOLDER = '/bv'
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "AGE"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "ID" (any) OPT ANY
+             ADD "AGE" (any) OPT ANY
+        )
+        OUTPUTLIST ("AGE", "ID"
+        )
+        WRAPPER (jdbc "AGE")
+    );
+

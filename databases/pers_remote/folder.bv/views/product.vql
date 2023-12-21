@@ -1,0 +1,30 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "PRODUCT"
+    FOLDER = '/bv'
+    DATASOURCENAME="12c"
+    SCHEMANAME='${databases.pers_remote.folder.bv.views.jdbc.product.SCHEMANAME}' 
+    RELATIONNAME='PRODUCT' 
+    OUTPUTSCHEMA (
+        "ID" = 'ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  SORTABLE,
+        "NAME" = 'NAME' :'java.lang.String' (OPT) (sourcetyperadix='10', sourcetypesize='100', sourcetypeid='12', sourcetypename='VARCHAR2')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "PRODUCT" I18N us_mst_mdt (
+        "ID":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
+        "NAME":text (sourcetypeid = '12', sourcetyperadix = '10', sourcetypesize = '100')
+    )
+    FOLDER = '/bv'
+    CACHE PARTIAL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "PRODUCT"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "ID" (any) OPT ANY
+             ADD "NAME" (any) OPT ANY
+        )
+        OUTPUTLIST ("ID", "NAME"
+        )
+        WRAPPER (jdbc "PRODUCT")
+    );
+
