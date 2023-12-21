@@ -23,7 +23,7 @@ CREATE OR REPLACE DATASOURCE JDBC "12c"
     MINEVICTABLETIME = 1800000
     POOLPREPAREDSTATEMENTS = false
     MAXOPENPREPAREDSTATEMENTS = -1
-    PROPERTIES ('includeSynonyms'='false', 'remarksReporting'='false')
+    PROPERTIES ('remarksReporting'='false', 'includeSynonyms'='false')
     DATA_LOAD_CONFIGURATION (
         USE_FOR_QUERY_OPTIMIZATION = DATA_MOVEMENT
         BATCHINSERTSIZE = 200
