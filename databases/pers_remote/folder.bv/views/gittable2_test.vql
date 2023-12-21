@@ -9,7 +9,7 @@ CREATE OR REPLACE WRAPPER JDBC "GITTABLE2"
         "DATE_COMMIT" = 'DATE_COMMIT' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE
     );
 
-CREATE OR REPLACE TABLE "GITTABLE2" I18N us_mst_mdt (
+CREATE OR REPLACE TABLE "GITTABLE2_TEST" I18N us_mst_mdt (
         "ID":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
         "DATE_COMMIT":timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypesize = '7')
     )
