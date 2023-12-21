@@ -1,0 +1,29 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "GITTABLE"
+    FOLDER = '/ds'
+    DATASOURCENAME="12c"
+    SCHEMANAME='${databases.pers_remote.folder.ds.views.jdbc.gittable.SCHEMANAME}' 
+    RELATIONNAME='GITTABLE' 
+    OUTPUTSCHEMA (
+        "ID" = 'ID' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  SORTABLE,
+        "DATE_COMMIT" = 'DATE_COMMIT' :'java.time.LocalDateTime' (OPT) (sourcetyperadix='10', sourcetypesize='7', sourcetypeid='93', sourcetypename='DATE')  SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "GITTABLE" I18N us_mst_mdt (
+        "ID":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
+        "DATE_COMMIT":timestamp (sourcetypeid = '93', sourcetyperadix = '10', sourcetypesize = '7')
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "GITTABLE"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "ID" (any) OPT ANY
+             ADD "DATE_COMMIT" (any) OPT ANY
+        )
+        OUTPUTLIST ("DATE_COMMIT", "ID"
+        )
+        WRAPPER (jdbc "GITTABLE")
+    );
+
