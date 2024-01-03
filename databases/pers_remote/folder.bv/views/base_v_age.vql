@@ -9,7 +9,7 @@ CREATE OR REPLACE WRAPPER JDBC "AGE"
         "AGE" = 'AGE' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='38', sourcetypeid='2', sourcetypename='NUMBER')  SORTABLE
     );
 
-CREATE OR REPLACE TABLE "bv_AGE" I18N us_mst_mdt (
+CREATE OR REPLACE TABLE "base_v_AGE" I18N us_mst_mdt (
         "ID":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38'),
         "AGE":decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '38')
     )
