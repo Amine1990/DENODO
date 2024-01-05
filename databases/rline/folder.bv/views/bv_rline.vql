@@ -1,0 +1,81 @@
+﻿CREATE OR REPLACE WRAPPER DF "ds_Rline"
+    FOLDER = '/bv'
+    DATASOURCENAME="ds_Rline"
+    OUTPUTSCHEMA (
+        """Department""" = '"Department"',
+        """Cost""" = '"Cost"',
+        """Travel Class""" = '"Travel Class"',
+        """Ticket Single or Return""" = '"Ticket Single or Return"',
+        """Airline""" = '"Airline"',
+        """Travel Date""" = '"Travel Date"',
+        """Origin ICAO""" = '"Origin ICAO"',
+        """Origin Name""" = '"Origin Name"',
+        """Origin Municipality""" = '"Origin Municipality"',
+        """Origin Region""" = '"Origin Region"',
+        """Origin Country""" = '"Origin Country"',
+        """Origin Latitude""" = '"Origin Latitude"',
+        """Origin Longitude""" = '"Origin Longitude"',
+        """Destination ICAO""" = '"Destination ICAO"',
+        """Destination Name""" = '"Destination Name"',
+        """Destination Region""" = '"Destination Region"',
+        """Destination Country""" = '"Destination Country"',
+        """Destination Latitude""" = '"Destination Latitude"',
+        """Destination Longitude""" = '"Destination Longitude"',
+        """Distance""" = '"Distance"'
+    );
+
+CREATE OR REPLACE TABLE "bv_Rline" I18N us_mst_mdt (
+        """Department""":text,
+        """Cost""":float,
+        """Travel Class""":text,
+        """Ticket Single or Return""":text,
+        """Airline""":text,
+        """Travel Date""":text,
+        """Origin ICAO""":text,
+        """Origin Name""":text,
+        """Origin Municipality""":text,
+        """Origin Region""":text,
+        """Origin Country""":text,
+        """Origin Latitude""":text,
+        """Origin Longitude""":text,
+        """Destination ICAO""":text,
+        """Destination Name""":text,
+        """Destination Region""":text,
+        """Destination Country""":text,
+        """Destination Latitude""":text,
+        """Destination Longitude""":text,
+        """Distance""":text
+    )
+    FOLDER = '/bv'
+    CACHE PARTIAL
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "ds_Rline"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD """Department""" NOS ZERO ()
+             ADD """Cost""" NOS ZERO ()
+             ADD """Travel Class""" NOS ZERO ()
+             ADD """Ticket Single or Return""" NOS ZERO ()
+             ADD """Airline""" NOS ZERO ()
+             ADD """Travel Date""" NOS ZERO ()
+             ADD """Origin ICAO""" NOS ZERO ()
+             ADD """Origin Name""" NOS ZERO ()
+             ADD """Origin Municipality""" NOS ZERO ()
+             ADD """Origin Region""" NOS ZERO ()
+             ADD """Origin Country""" NOS ZERO ()
+             ADD """Origin Latitude""" NOS ZERO ()
+             ADD """Origin Longitude""" NOS ZERO ()
+             ADD """Destination ICAO""" NOS ZERO ()
+             ADD """Destination Name""" NOS ZERO ()
+             ADD """Destination Region""" NOS ZERO ()
+             ADD """Destination Country""" NOS ZERO ()
+             ADD """Destination Latitude""" NOS ZERO ()
+             ADD """Destination Longitude""" NOS ZERO ()
+             ADD """Distance""" NOS ZERO ()
+        )
+        OUTPUTLIST ("""Airline""", """Cost""", """Department""", """Destination Country""", """Destination ICAO""", """Destination Latitude""", """Destination Longitude""", """Destination Name""", """Destination Region""", """Distance""", """Origin Country""", """Origin ICAO""", """Origin Latitude""", """Origin Longitude""", """Origin Municipality""", """Origin Name""", """Origin Region""", """Ticket Single or Return""", """Travel Class""", """Travel Date"""
+        )
+        WRAPPER (df "ds_Rline")
+    );
+

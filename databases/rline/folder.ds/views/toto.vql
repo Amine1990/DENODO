@@ -1,0 +1,27 @@
+﻿CREATE OR REPLACE WRAPPER JDBC toto
+    FOLDER = '/ds'
+    DATASOURCENAME=ssrvr
+    SQLSENTENCE='select * from Mehdidatabase.dbo.v_Persons_3'   
+    OUTPUTSCHEMA (
+        first_3 = 'first_3' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE NOT UPDATEABLE,
+        last_3 = 'last_3' :'java.lang.String' (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE NOT UPDATEABLE
+    );
+
+CREATE OR REPLACE TABLE toto I18N us_mst_mdt (
+        first_3:text (sourcetypeid = '-15', sourcetypedecimals = '0', sourcetypesize = '10'),
+        last_3:text (sourcetypeid = '-15', sourcetypedecimals = '0', sourcetypesize = '10')
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD toto(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD first_3 NOS ZERO ()
+             ADD last_3 NOS ZERO ()
+        )
+        OUTPUTLIST (first_3, last_3
+        )
+        WRAPPER (jdbc toto)
+    );
+

@@ -1,0 +1,43 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JSON ds_json_bearer
+    FOLDER = '/ds'
+    DATASOURCENAME=ds_json_bearer
+    TUPLEROOT '/JSONFile'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.rline.folder.ds.views.json.ds_json_bearer.ROUTE.HTTP.URL}'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        "JSONArray" = 'JSONArray' : ARRAY OF (
+            "JSONArray" = 'JSONArray' : REGISTER OF (
+                "userId" = 'userId' : 'java.lang.Integer',
+                id = 'id' : 'java.lang.Integer',
+                title = 'title' : 'java.lang.String',
+                body = 'body' : 'java.lang.String'
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE "ds_json_bearer_JSONArray_JSONArray" AS REGISTER OF ("userId":int, id:int, title:text, body:text);
+
+CREATE OR REPLACE TYPE "ds_json_bearer_JSONArray" AS ARRAY OF "ds_json_bearer_JSONArray_JSONArray";
+
+CREATE OR REPLACE TABLE bv_json_bearer I18N us_mst_mdt (
+        "JSONArray":"ds_json_bearer_JSONArray"
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_json_bearer(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "JSONArray" NOS ZERO ()
+             ADD "JSONArray" NOS ZERO ()
+             ADD "JSONArray"."userId" NOS ZERO ()
+             ADD "JSONArray".id NOS ZERO ()
+             ADD "JSONArray".title NOS ZERO ()
+             ADD "JSONArray".body NOS ZERO ()
+        )
+        OUTPUTLIST ("JSONArray"
+        )
+        WRAPPER (json ds_json_bearer)
+    );
+

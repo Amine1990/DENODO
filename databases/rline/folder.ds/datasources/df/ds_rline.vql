@@ -1,0 +1,8 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE DF "ds_Rline"
+    FOLDER = '/ds'
+    ROUTE LOCAL 'LocalConnection' '${databases.rline.folder.ds.datasources.df.ds_rline.ROUTE.LOCAL.PATH}' FILENAMEPATTERN = ''
+    COLUMNDELIMITER = ','
+    ENDOFLINEDELIMITER = '\n'
+    HEADER = TRUE;
+

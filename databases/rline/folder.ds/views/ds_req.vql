@@ -1,0 +1,67 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JSON ds_req
+    FOLDER = '/ds'
+    DATASOURCENAME=ds_req
+    TUPLEROOT '/JSONFile'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.rline.folder.ds.views.json.ds_req.ROUTE.HTTP.URL}'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        page = 'page' : 'java.lang.Integer',
+        per_page = 'per_page' : 'java.lang.Integer',
+        total = 'total' : 'java.lang.Integer',
+        total_pages = 'total_pages' : 'java.lang.Integer',
+        data = 'data' : ARRAY OF (
+            data = 'data' : REGISTER OF (
+                id = 'id' : 'java.lang.Integer',
+                email = 'email' : 'java.lang.String',
+                first_name = 'first_name' : 'java.lang.String',
+                last_name = 'last_name' : 'java.lang.String',
+                avatar = 'avatar' : 'java.lang.String'
+            )
+        ),
+        support = 'support' : REGISTER OF (
+            url = 'url' : 'java.lang.String',
+            text = 'text' : 'java.lang.String'
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE ds_req_data_data AS REGISTER OF (id:int, email:text, first_name:text, last_name:text, avatar:text);
+
+CREATE OR REPLACE TYPE ds_req_data AS ARRAY OF ds_req_data_data;
+
+CREATE OR REPLACE TYPE ds_req_support AS REGISTER OF (url:text, text:text);
+
+CREATE OR REPLACE TABLE ds_req I18N us_mst_mdt (
+        page:int,
+        per_page:int,
+        total:int,
+        total_pages:int,
+        data:ds_req_data,
+        support:ds_req_support
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_req(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD page NOS ZERO ()
+             ADD per_page NOS ZERO ()
+             ADD total NOS ZERO ()
+             ADD total_pages NOS ZERO ()
+             ADD data NOS ZERO ()
+             ADD data NOS ZERO ()
+             ADD data.id NOS ZERO ()
+             ADD data.email NOS ZERO ()
+             ADD data.first_name NOS ZERO ()
+             ADD data.last_name NOS ZERO ()
+             ADD data.avatar NOS ZERO ()
+             ADD support NOS ZERO ()
+             ADD support.url NOS ZERO ()
+             ADD support.text NOS ZERO ()
+        )
+        OUTPUTLIST (data, page, per_page, support, total, total_pages
+        )
+        WRAPPER (json ds_req)
+    );
+

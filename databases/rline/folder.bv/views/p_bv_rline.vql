@@ -1,0 +1,9 @@
+﻿CREATE OR REPLACE VIEW "p_bv_Rline" FOLDER = '/bv' AS SELECT """Travel Class""" AS """Travel Class""", count("""Department""") AS "Nb_of_flights", sum("""Cost""") AS "Total_cost" FROM "bv_Rline" GROUP BY """Travel Class""";
+
+ALTER VIEW "p_bv_Rline"
+ LAYOUT ("bv_Rline" = [20, 20, 200, 200]);
+
+ALTER VIEW "p_bv_Rline"
+ CACHE PARTIAL EXACT
+     BATCHSIZEINCACHE DEFAULT TIMETOLIVEINCACHE DEFAULT;
+

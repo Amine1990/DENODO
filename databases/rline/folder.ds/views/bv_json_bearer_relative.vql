@@ -1,0 +1,36 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JSON "ds_json_bearer_f900d450-2f8d-4fe3-beba-251f2441b3c2"
+    FOLDER = '/ds'
+    DATASOURCENAME=ds_json_bearer
+    TUPLEROOT '/JSONFile'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.rline.folder.ds.views.json.ds_json_bearer_f900d450-2f8d-4fe3-beba-251f2441b3c2.ROUTE.HTTP.URL}'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        "userId" = 'userId' : 'java.lang.Integer',
+        id = 'id' : 'java.lang.Integer',
+        title = 'title' : 'java.lang.String',
+        body = 'body' : 'java.lang.String'
+    )
+    );
+
+CREATE OR REPLACE TABLE bv_json_bearer_relative I18N us_mst_mdt (
+        "userId":int,
+        id:int,
+        title:text,
+        body:text
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_json_bearer(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "userId" NOS ZERO ()
+             ADD id NOS ZERO ()
+             ADD title NOS ZERO ()
+             ADD body NOS ZERO ()
+        )
+        OUTPUTLIST (body, id, title, "userId"
+        )
+        WRAPPER (json "ds_json_bearer_f900d450-2f8d-4fe3-beba-251f2441b3c2")
+    );
+

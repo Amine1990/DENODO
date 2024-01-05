@@ -1,0 +1,50 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JSON ds_req_new
+    FOLDER = '/ds'
+    DATASOURCENAME=ds_req
+    TUPLEROOT '/JSONFile'
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.rline.folder.ds.views.json.ds_req_new.ROUTE.HTTP.URL}'
+    OUTPUTSCHEMA ("JSONFile" = 'JSONFile' : REGISTER OF (
+        data = 'data' : REGISTER OF (
+            id = 'id' : 'java.lang.Integer',
+            email = 'email' : 'java.lang.String',
+            first_name = 'first_name' : 'java.lang.String',
+            last_name = 'last_name' : 'java.lang.String',
+            avatar = 'avatar' : 'java.lang.String'
+        ),
+        support = 'support' : REGISTER OF (
+            url = 'url' : 'java.lang.String',
+            text = 'text' : 'java.lang.String'
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE ds_req_new_data AS REGISTER OF (id:int, email:text, first_name:text, last_name:text, avatar:text);
+
+CREATE OR REPLACE TYPE ds_req_new_support AS REGISTER OF (url:text, text:text);
+
+CREATE OR REPLACE TABLE ds_req_new I18N us_mst_mdt (
+        data:ds_req_new_data,
+        support:ds_req_new_support
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_req_new(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD data NOS ZERO ()
+             ADD data.id NOS ZERO ()
+             ADD data.email NOS ZERO ()
+             ADD data.first_name NOS ZERO ()
+             ADD data.last_name NOS ZERO ()
+             ADD data.avatar NOS ZERO ()
+             ADD support NOS ZERO ()
+             ADD support.url NOS ZERO ()
+             ADD support.text NOS ZERO ()
+        )
+        OUTPUTLIST (data, support
+        )
+        WRAPPER (json ds_req_new)
+    );
+

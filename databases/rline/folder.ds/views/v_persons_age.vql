@@ -1,0 +1,33 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "v_Persons_Age"
+    FOLDER = '/ds'
+    DATASOURCENAME=ssrvr
+    CATALOGNAME='${databases.rline.folder.ds.views.jdbc.v_persons_age.CATALOGNAME}' 
+    SCHEMANAME='${databases.rline.folder.ds.views.jdbc.v_persons_age.SCHEMANAME}' 
+    RELATIONNAME='v_Persons_Age' 
+    OUTPUTSCHEMA (
+        "Identifier" = 'Identifier' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE,
+        "FamilyName" = 'FamilyName' :'java.lang.String' (OPT) (sourcetypesize='10', sourcetypeid='-15', sourcetypename='nchar')  SORTABLE,
+        "Old" = 'Old' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  ESCAPE SORTABLE
+    );
+
+CREATE OR REPLACE TABLE "v_Persons_Age" I18N us_mst_mdt (
+        "Identifier":text (sourcetypeid = '-15', sourcetypesize = '10'),
+        "FamilyName":text (sourcetypeid = '-15', sourcetypesize = '10'),
+        "Old":int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10')
+    )
+    FOLDER = '/ds'
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "v_Persons_Age"(
+        I18N us_mst_mdt
+        CONSTRAINTS (
+             ADD "Identifier" (any) OPT ANY
+             ADD "FamilyName" (any) OPT ANY
+             ADD "Old" (any) OPT ANY
+        )
+        OUTPUTLIST ("FamilyName", "Identifier", "Old"
+        )
+        WRAPPER (jdbc "v_Persons_Age")
+    );
+

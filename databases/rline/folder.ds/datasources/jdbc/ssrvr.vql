@@ -1,0 +1,32 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JDBC ssrvr
+    FOLDER = '/ds'
+    DRIVERCLASSNAME = 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+    DATABASEURI = '${databases.rline.folder.ds.datasources.jdbc.ssrvr.DATABASEURI}'
+    USERNAME = '${databases.rline.folder.ds.datasources.jdbc.ssrvr.USERNAME}'
+    USERPASSWORD = '${databases.rline.folder.ds.datasources.jdbc.ssrvr.USERPASSWORD}' ${databases.rline.folder.ds.datasources.jdbc.ssrvr.USERPASSWORD.ENCRYPTED}
+    CLASSPATH = 'mssql-jdbc-10.x'
+    DATABASENAME = 'sqlserver'
+    DATABASEVERSION = '2017'
+    FETCHSIZE = 1000
+    VALIDATIONQUERY = 'Select 1'
+    INITIALSIZE = 4
+    MAXIDLE = -1
+    MINIDLE = 0
+    MAXACTIVE = 20
+    EXHAUSTEDACTION = 1
+    TESTONBORROW = true
+    TESTONRETURN = false
+    TESTWHILEIDLE = false
+    TIMEBETWEENEVICTION = -1
+    NUMTESTPEREVICTION = 3
+    MINEVICTABLETIME = 1800000
+    POOLPREPAREDSTATEMENTS = false
+    MAXOPENPREPAREDSTATEMENTS = -1
+    KERBEROSPROPERTIES ('authenticationScheme'='JavaKerberos', 'integratedSecurity'='true')
+    DATA_LOAD_CONFIGURATION (
+        BATCHINSERTSIZE = 1000
+        TARGET_CATALOG = '${databases.rline.folder.ds.datasources.jdbc.ssrvr.TARGET_CATALOG}'
+        TARGET_SCHEMA = '${databases.rline.folder.ds.datasources.jdbc.ssrvr.TARGET_SCHEMA}'
+    );
+
