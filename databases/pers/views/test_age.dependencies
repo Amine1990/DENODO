@@ -1,0 +1,4 @@
+﻿/databases/pers/folder.bv/bv.vql
+/databases/pers/folder.ds/ds.vql
+/databases/pers/folder.ds/datasources/jdbc/12c.vql
+/databases/pers/folder.bv/views/b_v_age.vql
